@@ -12,7 +12,7 @@ def age(data : pd.DataFrame) -> None:
 
 
 def balance(data : pd.DataFrame) -> None:
-    plt.figure(2, figsize=(12, 7))
+    plt.figure(2, figsize=(9, 6))
 
     print("Balance Shape:",data.shape)
 
