@@ -33,25 +33,21 @@ x_train = pd.DataFrame(x_train)
 x_test = pd.DataFrame(x_test)
 
 correlation_matrix = pd.DataFrame(x_train).corr()
-fig, ax = plt.subplots(figsize=(10,10))         # Sample figsize in inches
+fig, ax = plt.subplots(figsize=(10,10))
 sns.heatmap(correlation_matrix, ax=ax)
 plt.show()
 
-# getting the upper triangle of the correlation matrix
 upper_tri = correlation_matrix.where(np.triu(np.ones(correlation_matrix.shape),k=1).astype(np.bool))
 print(upper_tri)
 
-# checking which columns can be dropped
 to_drop = [column for column in upper_tri.columns if any(upper_tri[column] > 0.95)]
 print('\nTo drop')
 print(to_drop)
 
-# removing the selected columns
 x_train = x_train.drop(x_train.columns[to_drop], axis=1)
 x_test = x_test.drop(x_test.columns[to_drop], axis=1)
 print(x_train.head())
 
-# apply the PCA for feature for feature reduction
 pca = PCA(n_components=0.95)
 pca.fit(x_train)
 PCA_x_train = pca.transform(x_train)
