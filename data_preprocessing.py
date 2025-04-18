@@ -4,7 +4,6 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.decomposition import PCA
 import pandas as pd
 import numpy as np
-import check_outlier
 import remove_outlier
 import seaborn as sns
 import matplotlib.pyplot as plt
