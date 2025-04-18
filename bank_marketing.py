@@ -6,29 +6,24 @@ from sklearn.preprocessing import LabelEncoder, OneHotEncoder, OrdinalEncoder
 import pandas as pd
 import numpy as np
 import prep_data
+import check_outliers
 
-def print_data(data):
-    print("Data:")
-    print(data)
 
-def __init__():
-    bank_marketing = fetch_ucirepo(id=222)
-    
-    x = bank_marketing.data.features  
-    y = bank_marketing.data.targets   
+bank_marketing = fetch_ucirepo(id=222)
 
-    x = prep_data.NaN_to_unknown(x)
-    y = prep_data.NaN_to_unknown(y)
+x = bank_marketing.data.features  
+y = bank_marketing.data.targets   
 
-    x, y = prep_data.shuffle_data(x, y)
+x = prep_data.NaN_to_unknown(x)
+y = prep_data.NaN_to_unknown(y)
 
-    x, y = prep_data.remove_outliers(x, y, ['age', 'balance', 'campaign'])
+x, y = prep_data.shuffle_data(x, y)
 
-    # x, y = prep_data.undersample_data(x, y)
+check_outliers.check_age_outlier(x)
+check_outliers.check_balance_outlier(x)
+check_outliers.check_day_outlier(x)
+check_outliers.check_duration_outlier(x)
+check_outliers.check_pdays_outlier(x)
+check_outliers.check_campaign_outlier(x)
+check_outliers.check_previous_outlier(x)
 
-    # Trebuie sa facem encoding la datele de tip object
-
-    print_data(x)
-    print_data(y)
-
-__init__()
