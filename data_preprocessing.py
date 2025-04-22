@@ -38,19 +38,19 @@ sns.heatmap(correlation_matrix, ax=ax)
 plt.show()
 
 upper_tri = correlation_matrix.where(np.triu(np.ones(correlation_matrix.shape),k=1).astype(np.bool))
-print(upper_tri)
+# print(upper_tri)
 
 to_drop = [column for column in upper_tri.columns if any(upper_tri[column] > 0.95)]
-print('\nTo drop')
-print(to_drop)
+# print('\nTo drop')
+# print(to_drop)
 
 x_train = x_train.drop(x_train.columns[to_drop], axis=1)
 x_test = x_test.drop(x_test.columns[to_drop], axis=1)
-print(x_train.head())
+# print(x_train.head())
 
 pca = PCA(n_components=0.95)
 pca.fit(x_train)
 PCA_x_train = pca.transform(x_train)
 PCA_x_test = pca.transform(x_test)
 
-print(x_train)
+# print(x_train)
