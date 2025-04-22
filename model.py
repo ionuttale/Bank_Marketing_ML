@@ -30,6 +30,10 @@ for hidden_layers in hidden_layers_options:
                 'learning_rate': learning_rates
             })
             configurations.append({
+                'hidden_layers': (neurons, neurons),
+                'learning_rate': learning_rates
+            })
+            configurations.append({
                 'hidden_layers': (neurons, neurons * 2),
                 'learning_rate': learning_rates
             })
