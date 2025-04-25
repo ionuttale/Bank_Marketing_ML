@@ -10,11 +10,11 @@ y_train = data_preprocessing.y_train
 x_test = data_preprocessing.x_test
 y_test = data_preprocessing.y_test
 
-print(x_train.shape)
-print(x_test.shape)
+# print(x_train)
+# print(x_test.shape)
 
 hidden_layers_options = [1, 2]
-neurons_options = [20]
+neurons_options = [12]
 learning_rates = [0.1, 0.01]
 
 configurations = []
@@ -54,7 +54,7 @@ for config in configurations:
         cm = confusion_matrix(y_test, predict)
         fig, ax = plt.subplots(1)
         sns.heatmap(cm, ax=ax, cmap=plt.cm.Blues, annot=True)
-        plt.title(f"Confusion Matrix (Hidden Layers={config['hidden_layers']}, LR={lr})")
-        plt.ylabel('True value')
-        plt.xlabel('Predicted value')
-        plt.show()
+        # plt.title(f"Confusion Matrix (Hidden Layers={config['hidden_layers']}, LR={lr})")
+        # plt.ylabel('True value')
+        # plt.xlabel('Predicted value')
+        # plt.show()

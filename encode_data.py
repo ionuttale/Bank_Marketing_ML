@@ -13,10 +13,12 @@ def duration(data: pd.DataFrame) -> pd.DataFrame:
 
 def categorical(data: pd.DataFrame) -> pd.DataFrame:
     categorial_features = ['job', 'marital', 'contact', 'month', 'poutcome']
+    le = LabelEncoder()
+    for feature in categorial_features:
+        data[feature] = le.fit_transform(data[feature])
+    # data = pd.get_dummies(data, columns=categorial_features, drop_first=True)
     
-    data = pd.get_dummies(data, columns=categorial_features, drop_first=True)
-    
-    print(data)
+    # print(data)
 
     return data
 
