@@ -1,4 +1,5 @@
 import pandas as pd
+from sklearn.preprocessing import LabelEncoder
 pd.set_option('future.no_silent_downcasting', True)
 
 def education(data: pd.DataFrame) -> pd.DataFrame:
@@ -12,11 +13,11 @@ def duration(data: pd.DataFrame) -> pd.DataFrame:
 
 def categorical(data: pd.DataFrame) -> pd.DataFrame:
     categorial_features = ['job', 'marital', 'contact', 'month', 'poutcome']
-    for item in categorial_features:
-        df = pd.get_dummies(data[item], prefix=item)
-        data = data.drop(item, axis=1)
-        for categorial_feature in df.columns:
-            data[categorial_feature] = df[categorial_feature]
+    
+    data = pd.get_dummies(data, columns=categorial_features, drop_first=True)
+    
+    print(data)
+
     return data
 
 def binary(data: pd.DataFrame) -> pd.DataFrame:

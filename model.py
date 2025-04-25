@@ -5,15 +5,16 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from itertools import product
 
-# Data preparation
-PCA_x_train = data_preprocessing.PCA_x_train
+x_train = data_preprocessing.x_train
 y_train = data_preprocessing.y_train
-PCA_x_test = data_preprocessing.PCA_x_test
+x_test = data_preprocessing.x_test
 y_test = data_preprocessing.y_test
 
-# Generate experiment configurations
+print(x_train.shape)
+print(x_test.shape)
+
 hidden_layers_options = [1, 2]
-neurons_options = [50, 100, 200]
+neurons_options = [20]
 learning_rates = [0.1, 0.01]
 
 configurations = []
@@ -38,30 +39,22 @@ for hidden_layers in hidden_layers_options:
                 'learning_rate': learning_rates
             })
 
-# Run experiments
 for config in configurations:
     for lr in config['learning_rate']:
         print(f"Running configuration: Hidden Layers={config['hidden_layers']}, Learning Rate={lr}")
         
-        # Initialize and train the model
-        mlp = MLPClassifier(hidden_layer_sizes=config['hidden_layers'], max_iter=300, activation='relu', solver='adam', learning_rate_init=lr, random_state=1)
-        mlp.fit(PCA_x_train, y_train)
+        mlp = MLPClassifier(hidden_layer_sizes=config['hidden_layers'], max_iter=2000, activation='relu', solver='adam', learning_rate_init=lr, random_state=1)
+        mlp.fit(x_train, y_train)
 
-        # Evaluate the model
-        predict = mlp.predict(PCA_x_test)
+        predict = mlp.predict(x_test)
         acc = accuracy_score(y_test, predict)
         mse = mean_squared_error(y_test, predict)
         print(f"Accuracy: {acc}, MSE: {mse}")
 
-        # Confusion matrix
         cm = confusion_matrix(y_test, predict)
         fig, ax = plt.subplots(1)
         sns.heatmap(cm, ax=ax, cmap=plt.cm.Blues, annot=True)
-        plt.title(f"Confusion Matrix (Hidden Layers={config['hidden_layers']}, LR={lr})")
-        plt.ylabel('True value')
-        plt.xlabel('Predicted value')
-        plt.show()
-
-        print("Training error: %f" % mlp.loss_curve_[-1])
-        print("Training set score: %f" % mlp.score(PCA_x_train, y_train))
-        print("Test set score: %f" % mlp.score(PCA_x_test, y_test))
+        # plt.title(f"Confusion Matrix (Hidden Layers={config['hidden_layers']}, LR={lr})")
+        # plt.ylabel('True value')
+        # plt.xlabel('Predicted value')
+        # plt.show()

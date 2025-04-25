@@ -8,6 +8,7 @@ import remove_outlier
 import seaborn as sns
 import matplotlib.pyplot as plt
 import encode_data
+import check_outlier
 
 data = pd.read_csv('bank-full.csv', sep=';')
 
@@ -17,12 +18,17 @@ data = remove_outlier.pdays(data)
 data = remove_outlier.campaign(data)
 data = remove_outlier.previous(data)
 
+# print(data.shape)
+
+# check_outlier.plot_all_boxplots(data)
+
+
 data = encode_data.encode(data)
 
 y = data['y']
 x = data.values[:, :-1]
 
-x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.2, random_state=42)
+x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=0.25, random_state=42)
 
 scaler = StandardScaler()
 scaler.fit(x)
@@ -35,7 +41,7 @@ x_test = pd.DataFrame(x_test)
 correlation_matrix = pd.DataFrame(x_train).corr()
 fig, ax = plt.subplots(figsize=(10,10))
 sns.heatmap(correlation_matrix, ax=ax)
-plt.show()
+# plt.show()
 
 upper_tri = correlation_matrix.where(np.triu(np.ones(correlation_matrix.shape),k=1).astype(np.bool))
 # print(upper_tri)
@@ -48,9 +54,5 @@ x_train = x_train.drop(x_train.columns[to_drop], axis=1)
 x_test = x_test.drop(x_test.columns[to_drop], axis=1)
 # print(x_train.head())
 
-pca = PCA(n_components=0.95)
-pca.fit(x_train)
-PCA_x_train = pca.transform(x_train)
-PCA_x_test = pca.transform(x_test)
+# print(x_train.shape)
 
-# print(x_train)
